@@ -11,14 +11,14 @@ const Cu = Components.utils;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 function ProfileSnitcher() {
-	this.wrappedJSObject = this;
+    this.wrappedJSObject = this;
 }
 
 ProfileSnitcher.prototype = {
-      contractID: "@collinsmichaelg.com/profile-snitcher;1",
-      classID: Components.ID("DE00EBDE-7477-49B2-AE8F-8980ABC0B592"),
-      QueryInterface: XPCOMUtils.generateQI([Ci.nsIObserver]),
-      _xpcom_categories: [{ category: "profile-after-change", entry: "m-profile-snitcher" }],
+    contractID: "@collinsmichaelg.com/profile-snitcher;1",
+    classID: Components.ID("DE00EBDE-7477-49B2-AE8F-8980ABC0B592"),
+    QueryInterface: XPCOMUtils.generateQI([Ci.nsIObserver]),
+    _xpcom_categories: [{ category: "profile-after-change", entry: "m-profile-snitcher" }],
 
     observe: function( subject, topic, data) {
         var windowWatcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].getService(Ci.nsIWindowWatcher);
@@ -27,13 +27,26 @@ ProfileSnitcher.prototype = {
 		windowWatcher.registerNotification(this);
 		this.checkProfile();
 	} else if (topic == "domwindowopened") {
-		var win = subject;
-		var status = win.document.getElementById("profileSnitcherStatus");
-		if (status && this.profile) {
-			status.setAttribute("label", "Profile Snithcer: " + this.profile);
-		}
-		windowWatcher.unregisterNotification(this);	
+		var profile = this.profile;
+		var mainWindow = subject.QueryInterface(Ci.nsIInterfaceRequestor)
+                   .getInterface(Ci.nsIWebNavigation)
+                   .QueryInterface(Ci.nsIDocShellTreeItem)
+                   .rootTreeItem
+                   .QueryInterface(Ci.nsIInterfaceRequestor)
+                   .getInterface(Ci.nsIDOMWindow); 
 
+		mainWindow.dump("*.*.*.*.* Profile Snitcher => " + profile + "\n");
+
+		mainWindow.addEventListener("load", function() {
+
+			var status = mainWindow.document.getElementById("profileSnitcherStatus");
+
+			if (status) {
+				status.setAttribute("label", "Profile Snithcer: " + profile);
+			}
+		}, true);
+
+		windowWatcher.unregisterNotification(this);	
 	}
     },
 
@@ -45,8 +58,6 @@ ProfileSnitcher.prototype = {
 
 	    this.profile = currProfD.leafName;
 
-//            var status = document.getElementById("profileSnitcherStatus");
-//            status.setAttribute("label", "Profile Snitcher: " + currProfD.leafName);
 /*
             try {
                 var profServ = Cc["@mozilla.org/profile/manager;1"];
