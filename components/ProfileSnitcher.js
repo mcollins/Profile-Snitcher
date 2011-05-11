@@ -42,7 +42,7 @@ ProfileSnitcher.prototype = {
 			var status = mainWindow.document.getElementById("profileSnitcherStatus");
 
 			if (status) {
-				status.setAttribute("label", "Profile Snithcer: " + profile);
+				status.setAttribute("label", "Profile Snitcher => " + profile);
 			}
 		}, true);
 
