@@ -43,10 +43,10 @@ ProfileSnitcher.prototype = {
 
 			if (status) {
 				status.setAttribute("label", "Profile Snitcher => " + profile);
+				windowWatcher.unregisterNotification(this);
 			}
 		}, true);
 
-		windowWatcher.unregisterNotification(this);	
 	}
     },
 
