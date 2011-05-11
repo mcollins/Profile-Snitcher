@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <!-- Extend Firefox status bar -->
+    <statusbar id="status-bar">
+        <statusbarpanel id="profileSnitcherStatus" label="Profile Snitcher"/>
+    </statusbar>
+    <script type="application/x-javascript">
+        function checkProfile() {
+            var propServ = Components.classes["@mozilla.org/file/directory_service;1"]
+                .getService(Components.interfaces.nsIProperties);
+        
+            var currProfD = propServ.get("ProfD", Ci.nsIFile);
+            window.dump("ProfileSnitcher currProfD => " + currProfD.leafName + "\n");
+            
+            var status = document.getElementById("profileSnitcherStatus");
+            status.setAttribute("label", "Profile Snitcher: " + currProfD.leafName);
+                        
+            try {
+                var profServ = Components.classes["@mozilla.org/profile/manager;1"];
+//                    .getService(Components.interfaces.nsIProfile);                
+                var profMan = profServ.getService(Components.interfaces.nsIProfile);
+            } catch (ex) {
+                window.dump("ProfileSnitcher error: " + ex + "\n");
+            }
+            
+            window.dump("ProfileSnitcher profMan => " + profMan + "\n");
+            
+            var profList = new Object();
+            if (profMan) {
+                var profiles = profMan.getProfileList(profList);
+                window.dump("ProfileSnitcher profList => " + profList + "\n");
+            }
+            if (profiles) window.dump("ProfileSnitcher profiles => " + profiles + "\n");
+        }
+        setTimeout(checkProfile, 500);
+    </script>
+</overlay>

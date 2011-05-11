@@ -1,0 +1,2 @@
+content     ProfileSnitcher     chrome/content/ProfileSnitcher/
+overlay chrome://browser/content/browser.xul chrome://ProfileSnitcher/content/ProfileSnitcher.xul
