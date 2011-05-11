@@ -1,2 +1,6 @@
-content     ProfileSnitcher     chrome/content/ProfileSnitcher/
-overlay chrome://browser/content/browser.xul chrome://ProfileSnitcher/content/ProfileSnitcher.xul
+content    ProfileSnitcher    chrome/content/ProfileSnitcher/
+overlay    chrome://browser/content/browser.xul    chrome://ProfileSnitcher/content/ProfileSnitcher.xul
+
+component    {DE00EBDE-7477-49B2-AE8F-8980ABC0B592}    components/ProfileSnitcher.js
+contract    @collinsmichaelg.com/profile-snitcher;1    {DE00EBDE-7477-49B2-AE8F-8980ABC0B592}
+category    profile-after-change    m-profile-snitcher    @collinsmichaelg.com/profile-snitcher;1

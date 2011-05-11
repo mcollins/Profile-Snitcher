@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
-    <em:id>{c9fc4982-5880-43dc-a6bd-0e1781601989}</em:id>
+    <em:id>ProfileSnitcher@collinsmichaelg.com</em:id>
     <em:name>ProfileSnitcher</em:name>
     <em:type>2</em:type>
     <em:version>0.3</em:version>
